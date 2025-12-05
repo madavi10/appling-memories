@@ -392,6 +392,9 @@
 
     const XML_PATH = "videos.xml";
 
+    // TODO: Replace this with your real Google API key after you create it
+    const API_KEY = "YOUR_GOOGLE_API_KEY_HERE";
+
     let keywordMap = {};
     let videos = [];
     let activeCategory = "All Videos";
@@ -401,7 +404,7 @@
       buildBladeTabs();
       attachSearchListener();
       loadXmlConfig();
-      updateTheme(activeCategory);  // set initial colors
+      updateTheme(activeCategory);   // set initial colors
     });
 
     function buildBladeTabs() {
@@ -449,13 +452,20 @@
         const xmlText = await response.text();
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+
         parseKeywords(xmlDoc);
-        parseVideos(xmlDoc);
+
+        const folderNode = xmlDoc.querySelector("driveFolder");
+        if (!folderNode) throw new Error("Missing <driveFolder> in videos.xml");
+        const folderId = folderNode.getAttribute("id");
+        if (!folderId) throw new Error("driveFolder is missing id attribute");
+
+        await loadDriveFiles(folderId);
         renderVideoList();
       } catch (err) {
         console.error(err);
         document.getElementById("videoCount").textContent =
-          "Error loading videos.xml – check that it exists in this repository.";
+          "Error loading configuration or Drive files. Check videos.xml, API key, and folder sharing.";
       }
     }
 
@@ -469,31 +479,30 @@
           .filter(Boolean);
         keywordMap[name] = keywords;
       });
+      // Ensure All Videos exists
       if (!keywordMap["All Videos"]) keywordMap["All Videos"] = [];
     }
 
-    function parseVideos(xmlDoc) {
-      videos = [];
-      const videoNodes = xmlDoc.querySelectorAll("videos > video");
-      videoNodes.forEach(node => {
-        const title = getText(node, "title");
-        const filename = getText(node, "filename");
-        const url = getText(node, "url");
-        const description = getText(node, "description");
-        if (url) {
-          videos.push({
-            title: title || filename || "Untitled Video",
-            filename: filename || "",
-            url,
-            description: description || ""
-          });
-        }
-      });
+    async function loadDriveFiles(folderId) {
+      // Query: all non-trashed video files directly in this folder
+      const query = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'video/' and trashed = false`);
+      const fields = encodeURIComponent("files(id,name,mimeType)");
+      const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
 
-      function getText(parent, tagName) {
-        const el = parent.getElementsByTagName(tagName)[0];
-        return el ? el.textContent.trim() : "";
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error("Drive API request failed");
       }
+
+      const data = await res.json();
+      const files = data.files || [];
+
+      videos = files.map(file => ({
+        title: file.name,
+        filename: file.name,
+        url: `https://drive.google.com/file/d/${file.id}/preview`,
+        description: ""
+      }));
     }
 
     function filterVideos() {
@@ -565,12 +574,12 @@
         actions.className = "video-actions";
 
         const btn = document.createElement("button");
-          btn.className = "play-button";
-          btn.textContent = "Play";
-          btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            openVideo(video.url);
-          });
+        btn.className = "play-button";
+        btn.textContent = "Play";
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openVideo(video.url);
+        });
 
         const tags = document.createElement("div");
         tags.textContent = "Opens in Google Drive";
@@ -612,5 +621,7 @@
       }
     }
   </script>
+
+  
 </body>
 </html>
