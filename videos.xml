@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <videoConfig>
-  <!-- The Google Drive folder that holds all the videos -->
-  <!-- This is the ID from your link:
-       https://drive.google.com/drive/folders/1YHQzDbzNnQuGuloaZCrqk37HtQiwHLMw -->
+  <!-- Google Drive folder that holds ALL the videos -->
   <driveFolder id="1YHQzDbzNnQuGuloaZCrqk37HtQiwHLMw" />
 
-  <!--
-    KEYWORD-BASED CATEGORY RULES
-    ----------------------------
-    The app will:
-      - Ask Google Drive for a list of files in that folder
-      - Look at each file's NAME (e.g. "Matthew Juggling Bags.mp4")
-      - If the name contains any of these keywords (case-insensitive),
-        that file shows up under that category's tab.
-
-    "All Videos" is handled automatically by the app and shows every file.
+  <!-- Keyword-based category rules.
+       The app:
+         - Lists files from that Drive folder
+         - Looks at each file's NAME (e.g. "Matthew Juggling Bags.mp4")
+         - If the name contains any of these keywords (case-insensitive),
+           the file appears under that category's tab.
   -->
   <keywords>
 
@@ -35,7 +29,7 @@
       <keyword>chi</keyword>
     </category>
 
-    <category name="matthew">
+    <category name="Matthew">
       <keyword>matthew</keyword>
       <keyword>matt</keyword>
     </category>
