@@ -531,6 +531,7 @@
     }
 
     function renderVideoList() {
+      console.log("Active category:", activeCategory, "Keywords:", keywordMap[activeCategory]);
       const listEl = document.getElementById("videoList");
       const countEl = document.getElementById("videoCount");
       const filtered = filterVideos();
