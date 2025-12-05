@@ -1,0 +1,73 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww16720\viewh11660\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <?xml version="1.0" encoding="UTF-8"?>\
+<videoConfig>\
+  <!-- Define the keywords that map filenames to each tab -->\
+  <keywords>\
+    <!-- "All Videos" is handled automatically in code (no keywords needed) -->\
+\
+    <category name="Family">\
+      <!-- Any video whose FILENAME contains one of these words will appear under Family -->\
+      <keyword>Matthew</keyword>\
+      <keyword>Mary Kay</keyword>\
+      <keyword>Michael</keyword>\
+      <keyword>Andrew</keyword>\
+      <keyword>Family</keyword>\
+    </category>\
+\
+    <category name="Andrew">\
+      <keyword>Andrew</keyword>\
+      <keyword>Drew</keyword>\
+    </category>\
+\
+    <category name="Matthew">\
+      <keyword>Matthew</keyword>\
+      <keyword>Matt</keyword>\
+    </category>\
+\
+    <category name="Michael">\
+      <keyword>Michael</keyword>\
+      <keyword>Mike</keyword>\
+    </category>\
+\
+    <category name="Mary Kay">\
+      <keyword>Mary Kay</keyword>\
+      <keyword>MK</keyword>\
+    </category>\
+  </keywords>\
+\
+  <!-- List of all videos you want to appear on the site -->\
+  <videos>\
+    <!-- Repeat this <video> block for each video -->\
+    <video>\
+      <!-- A friendly title shown on the page -->\
+      <title>Christmas Morning 1992 - Matthew & Andrew</title>\
+\
+      <!-- The actual filename (or any label) that contains your keywords -->\
+      <filename>1992_Christmas_Matthew_Andrew.mp4</filename>\
+\
+      <!-- A Google Drive share link or direct link to the video -->\
+      <!-- Use the "share" or "preview" URL from Google Drive -->\
+      <url>https://drive.google.com/file/d/EXAMPLE_ID/preview</url>\
+\
+      <!-- Optional description text -->\
+      <description>Opening presents in the living room.</description>\
+    </video>\
+\
+    <!-- Example second video -->\
+    <video>\
+      <title>Family Vacation at the Beach 1995</title>\
+      <filename>1995_beach_family_Mary_Kay_Michael.mp4</filename>\
+      <url>https://drive.google.com/file/d/ANOTHER_ID/preview</url>\
+      <description>All of us at the beach house.</description>\
+    </video>\
+\
+    <!-- Add as many <video> entries as you want -->\
+  </videos>\
+</videoConfig>\
+}
