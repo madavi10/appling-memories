@@ -71,3 +71,509 @@
       transition:
         transform 0.18s ease,
         background 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease;
+      transform-origin: right center;
+    }
+
+    .blade-tab span {
+      display: block;
+      transform: rotate(-90deg);
+      transform-origin: left bottom;
+      white-space: nowrap;
+    }
+
+    .blade-tab:nth-child(1) { transform: translateX(8px); }
+    .blade-tab:nth-child(2) { transform: translateX(4px); }
+    .blade-tab:nth-child(3) { transform: translateX(0px); }
+    .blade-tab:nth-child(4) { transform: translateX(-4px); }
+    .blade-tab:nth-child(5) { transform: translateX(-8px); }
+    .blade-tab:nth-child(6) { transform: translateX(-12px); }
+
+    .blade-tab.active {
+      background: radial-gradient(circle at top left, #c8f57e 0%, #72d84c 40%, #2d6623 100%);
+      color: #08300a;
+      transform: translateX(14px);
+      box-shadow:
+        0 6px 14px rgba(0,0,0,0.6),
+        inset 0 0 0 2px rgba(255,255,255,0.65);
+    }
+
+    .blade-tab:hover:not(.active) {
+      transform: translateX(10px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
+    }
+
+    .main-panel {
+      flex: 1;
+      position: relative;
+      padding: 24px 28px;
+      background: radial-gradient(circle at top left, #b4ff92 0%, #4caf50 45%, #162717 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+
+    .panel-title-block {
+      max-width: 60%;
+    }
+
+    .panel-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 6px;
+    }
+
+    .panel-subtitle {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #f2ffe8;
+      opacity: 0.95;
+    }
+
+    .panel-meta {
+      text-align: right;
+      font-size: 0.85rem;
+      color: #e8ffe0;
+      opacity: 0.9;
+    }
+
+    .panel-meta strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+
+    .video-list-container {
+      flex: 1;
+      background: rgba(3, 15, 4, 0.6);
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.08),
+        0 12px 30px rgba(0,0,0,0.7);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .video-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: #e0ffe0;
+    }
+
+    .video-count {
+      opacity: 0.9;
+    }
+
+    .search-box input {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      font-size: 0.85rem;
+      background: rgba(255,255,255,0.1);
+      color: #f5fff5;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2);
+    }
+
+    .video-list {
+      margin-top: 4px;
+      padding-right: 4px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(180,255,180,0.8) transparent;
+    }
+
+    .video-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .video-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .video-list::-webkit-scrollbar-thumb {
+      background: rgba(180,255,180,0.7);
+      border-radius: 999px;
+    }
+
+    .video-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 10px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+      cursor: pointer;
+    }
+
+    .video-item:hover {
+      background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+
+    .video-main {
+      max-width: 70%;
+    }
+
+    .video-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .video-filename {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    .video-description {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    .video-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      font-size: 0.75rem;
+      text-align: right;
+    }
+
+    .play-button {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: radial-gradient(circle at top left, #f8ffb7 0%, #f9ff6a 25%, #f3c02b 80%);
+      color: #352302;
+      box-shadow:
+        0 3px 8px rgba(0,0,0,0.7),
+        inset 0 0 0 1px rgba(255,255,255,0.8);
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .play-button:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 4px 12px rgba(0,0,0,0.85),
+        inset 0 0 0 1px rgba(255,255,255,0.9);
+    }
+
+    .play-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+
+    .panel-footer {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      opacity: 0.8;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .panel-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #c8ff7a;
+    }
+
+    @media (max-width: 900px) {
+      #app { flex-direction: column; }
+      .blade-nav {
+        width: 100%;
+        height: 80px;
+        padding: 8px 10px;
+      }
+      .blade-stack {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .blade-tab {
+        border-radius: 14px;
+        transform: none !important;
+      }
+      .blade-tab span { transform: none; }
+      .main-panel { padding: 18px 16px; }
+      .panel-header { flex-direction: column; }
+      .panel-title-block { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <nav class="blade-nav">
+      <div class="blade-stack" id="bladeTabs"></div>
+    </nav>
+
+    <section class="main-panel">
+      <header class="panel-header">
+        <div class="panel-title-block">
+          <h1 class="panel-title" id="panelTitle">Family Video Library</h1>
+          <p class="panel-subtitle" id="panelSubtitle">
+            Welcome to the Davis home video archive. Use the blades on the left
+            to browse by person, and click any video to open it in a new tab.
+          </p>
+        </div>
+        <div class="panel-meta">
+          <strong id="currentCategoryLabel">All Videos</strong>
+          <span>Choose a blade to filter by family member.</span>
+          <span>Search within the current view below.</span>
+        </div>
+      </header>
+
+      <div class="video-list-container">
+        <div class="video-list-header">
+          <div class="video-count" id="videoCount">Loading videos…</div>
+          <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search in these videos…" />
+          </div>
+        </div>
+        <div class="video-list" id="videoList"></div>
+      </div>
+
+      <footer class="panel-footer">
+        <span><span class="dot"></span> Xbox 360–style family archive</span>
+        <span>Built with love for the family.</span>
+      </footer>
+    </section>
+  </div>
+
+  <script>
+    const CATEGORIES = [
+      "All Videos",
+      "Family",
+      "Andrew",
+      "Matthew",
+      "Michael",
+      "Mary Kay"
+    ];
+
+    const XML_PATH = "videos.xml";
+
+    let keywordMap = {};
+    let videos = [];
+    let activeCategory = "All Videos";
+    let searchTerm = "";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      buildBladeTabs();
+      attachSearchListener();
+      loadXmlConfig();
+    });
+
+    function buildBladeTabs() {
+      const container = document.getElementById("bladeTabs");
+      container.innerHTML = "";
+      CATEGORIES.forEach((name, index) => {
+        const tab = document.createElement("div");
+        tab.className = "blade-tab" + (index === 0 ? " active" : "");
+        tab.dataset.category = name;
+
+        const label = document.createElement("span");
+        label.textContent = name.toLowerCase();
+        tab.appendChild(label);
+
+        tab.addEventListener("click", () => setActiveCategory(name));
+        container.appendChild(tab);
+      });
+    }
+
+    function attachSearchListener() {
+      const input = document.getElementById("searchInput");
+      input.addEventListener("input", (e) => {
+        searchTerm = e.target.value.trim().toLowerCase();
+        renderVideoList();
+      });
+    }
+
+    function setActiveCategory(categoryName) {
+      activeCategory = categoryName;
+      document.querySelectorAll(".blade-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.category === categoryName);
+      });
+      document.getElementById("currentCategoryLabel").textContent = categoryName;
+      renderVideoList();
+    }
+
+    async function loadXmlConfig() {
+      try {
+        const response = await fetch(XML_PATH);
+        if (!response.ok) throw new Error("Could not load videos.xml");
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+        parseKeywords(xmlDoc);
+        parseVideos(xmlDoc);
+        renderVideoList();
+      } catch (err) {
+        console.error(err);
+        document.getElementById("videoCount").textContent =
+          "Error loading videos.xml – check that it exists in this repository.";
+      }
+    }
+
+    function parseKeywords(xmlDoc) {
+      keywordMap = {};
+      const categoryNodes = xmlDoc.querySelectorAll("keywords > category");
+      categoryNodes.forEach(catNode => {
+        const name = catNode.getAttribute("name");
+        const keywords = Array.from(catNode.getElementsByTagName("keyword"))
+          .map(k => k.textContent.trim())
+          .filter(Boolean);
+        keywordMap[name] = keywords;
+      });
+      if (!keywordMap["All Videos"]) keywordMap["All Videos"] = [];
+    }
+
+    function parseVideos(xmlDoc) {
+      videos = [];
+      const videoNodes = xmlDoc.querySelectorAll("videos > video");
+      videoNodes.forEach(node => {
+        const title = getText(node, "title");
+        const filename = getText(node, "filename");
+        const url = getText(node, "url");
+        const description = getText(node, "description");
+        if (url) {
+          videos.push({
+            title: title || filename || "Untitled Video",
+            filename: filename || "",
+            url,
+            description: description || ""
+          });
+        }
+      });
+
+      function getText(parent, tagName) {
+        const el = parent.getElementsByTagName(tagName)[0];
+        return el ? el.textContent.trim() : "";
+      }
+    }
+
+    function filterVideos() {
+      let filtered = videos.slice();
+
+      if (activeCategory !== "All Videos") {
+        const keywords = (keywordMap[activeCategory] || []).map(k => k.toLowerCase());
+        if (keywords.length > 0) {
+          filtered = filtered.filter(video => {
+            const text = (video.filename + " " + video.title).toLowerCase();
+            return keywords.some(kw => text.includes(kw));
+          });
+        } else {
+          filtered = [];
+        }
+      }
+
+      if (searchTerm) {
+        filtered = filtered.filter(video => {
+          const text = (video.title + " " + video.filename + " " + video.description).toLowerCase();
+          return text.includes(searchTerm);
+        });
+      }
+
+      return filtered;
+    }
+
+    function renderVideoList() {
+      const listEl = document.getElementById("videoList");
+      const countEl = document.getElementById("videoCount");
+      const filtered = filterVideos();
+      listEl.innerHTML = "";
+
+      if (filtered.length === 0) {
+        countEl.textContent = "No videos found for this view.";
+        return;
+      }
+
+      countEl.textContent = `${filtered.length} video${filtered.length !== 1 ? "s" : ""} found`;
+
+      filtered.forEach(video => {
+        const item = document.createElement("div");
+        item.className = "video-item";
+        item.addEventListener("click", () => openVideo(video.url));
+
+        const main = document.createElement("div");
+        main.className = "video-main";
+
+        const title = document.createElement("div");
+        title.className = "video-title";
+        title.textContent = video.title;
+        main.appendChild(title);
+
+        if (video.filename) {
+          const fn = document.createElement("div");
+          fn.className = "video-filename";
+          fn.textContent = video.filename;
+          main.appendChild(fn);
+        }
+
+        if (video.description) {
+          const desc = document.createElement("div");
+          desc.className = "video-description";
+          desc.textContent = video.description;
+          main.appendChild(desc);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "video-actions";
+
+        const btn = document.createElement("button");
+        btn.className = "play-button";
+        btn.textContent = "Play";
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          openVideo(video.url);
+        });
+
+        const tags = document.createElement("div");
+        tags.textContent = "Opens in Google Drive";
+
+        actions.appendChild(btn);
+        actions.appendChild(tags);
+
+        item.appendChild(main);
+        item.appendChild(actions);
+
+        listEl.appendChild(item);
+      });
+    }
+
+    function openVideo(url) {
+      window.open(url, "_blank", "noopener");
+    }
+  </script>
+</body>
+</html>
