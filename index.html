@@ -111,20 +111,23 @@
 
     /* ---------- HEADER IMAGE ---------- */
     .header-art {
-      position: absolute;
-      top: 14px;
-      right: 18px;
-      width: 190px;
-      height: auto;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.15);
-      padding: 6px;
-      box-shadow:
-        0 10px 25px rgba(0,0,0,0.25),
-        inset 0 0 0 1px rgba(255,255,255,0.25);
-      opacity: .92;
-      pointer-events: none;
-    }
+  position: absolute;
+  top: 14px;
+  right: 18px;
+
+  width: 190px;     /* adjust if you want */
+  height: auto;
+
+  /* Remove the extra frame */
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+
+  opacity: 0.95;
+  pointer-events: none;
+}
+
 
     /* ---------- VIDEO LIST ---------- */
     .video-list-container {
