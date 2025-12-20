@@ -112,6 +112,7 @@
     }
 
   .panel-header {
+    <img src="orchard.png" alt="Family orchard illustration" class="header-art" />
     background: linear-gradient(
       135deg,
       #7fcf55 0%,
@@ -438,6 +439,44 @@
   background: linear-gradient(90deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03)) !important;
 }
 
+/* =========================
+   Header illustration (top-right)
+   ========================= */
+
+.header-art {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 200px;
+  max-width: 35%;
+  height: auto;
+  pointer-events: none; /* purely decorative */
+
+  /* Visual integration */
+  border-radius: 16px;
+  background: rgba(255,255,255,0.15);
+  padding: 6px;
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.25),
+    inset 0 0 0 1px rgba(255,255,255,0.25);
+}
+
+/* Make sure header can position children */
+.panel-header {
+  position: relative;
+}
+
+    @media (max-width: 900px) {
+  .header-art {
+    position: static;
+    display: block;
+    margin: 10px auto 0;
+    width: 120px;
+    opacity: 0.92;
+  }
+}
+
+    
   </style>
 </head>
 <body>
