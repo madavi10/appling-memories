@@ -1,133 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Family Video Library</title>
+  <meta charset="UTF-8" />
+  <title>Family Video Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-/* ===============================
-   THEME VARIABLES
-   =============================== */
-:root{
-  --bg1:#1e6a2e;
-  --bg2:#77ff7b;
-  --panel:rgba(25,70,35,.78);
-  --panel2:rgba(35,95,48,.65);
-  --header:rgba(120,220,110,.50);
-  --tabActive1:#b7ff7e;
-  --tabActive2:#6bff7b;
-}
+  <style>
+    * { box-sizing: border-box; }
 
-/* Per-tab themes */
-body[data-theme="family"]{--bg1:#174b7a;--bg2:#74d6ff;}
-body[data-theme="andrew"]{--bg1:#6a1e6a;--bg2:#ff7bf3;}
-body[data-theme="matthew"]{--bg1:#7a3a10;--bg2:#ffbf7b;}
-body[data-theme="michael"]{--bg1:#124f4a;--bg2:#7bffd6;}
-body[data-theme="marykay"]{--bg1:#7a1e2a;--bg2:#ff7b92;}
+    body {
+      margin: 0;
+      padding: 24px;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #4caf50 0%, #1c2b1f 40%, #030608 100%);
+      color: #fdfdfd;
+    }
 
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:radial-gradient(circle at 25% 15%,var(--bg2),var(--bg1));
-  padding:32px;
-  min-height:100vh;
-}
+    #app {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      background: rgba(0,0,0,0.35);
+      border-radius: 22px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      overflow: visible;
+    }
 
-/* Layout */
-.shell{max-width:1200px;margin:auto;display:grid;grid-template-columns:280px 1fr;gap:22px;}
-.tabs{background:rgba(255,255,255,.22);padding:14px;border-radius:14px;}
-.tab-btn{width:100%;margin:8px 0;padding:14px;border:none;border-radius:14px;font-weight:800;cursor:pointer;}
-.tab-btn.active{background:linear-gradient(var(--tabActive1),var(--tabActive2));}
-.content{position:relative}
-.header{background:var(--header);padding:26px;border-radius:18px;position:relative;}
-.header-art{position:absolute;top:6px;right:18px;width:190px;opacity:.95;}
-.panel{margin-top:18px;background:var(--panel);padding:18px;border-radius:18px;}
-.row{background:var(--panel2);padding:14px;border-radius:14px;display:flex;justify-content:space-between;}
-.title{color:#fff;font-weight:800}
-.play{border:none;border-radius:999px;padding:8px 16px;font-weight:800;cursor:pointer}
-</style>
+    /* ---------- LEFT NAV (DESKTOP) ---------- */
+    .blade-nav {
+      width: 210px;
+      padding: 14px 0;
+      background: linear-gradient(180deg, #d7d7d7, #a8a8a8, #e9e9e9);
+      box-shadow: 10px 0 25px rgba(0,0,0,0.45);
+      position: sticky;
+      top: 20px;
+      align-self: flex-start;
+      z-index: 5;
+    }
+
+    .blade-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 10px;
+    }
+
+    .blade-tab {
+      height: 52px;
+      padding: 0 16px;
+      border-radius: 16px 0 0 16px;
+      background: linear-gradient(180deg, #eeeeee, #cacaca, #f5f5f5);
+      color: #2b2b2b;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: lowercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .blade-tab:hover:not(.active) {
+      transform: translateX(6px);
+    }
+
+    .blade-tab.active {
+      transform: translateX(10px);
+      color: #0f260f;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.6);
+    }
+
+    /* ---------- MAIN PANEL ---------- */
+    .main-panel {
+      flex: 1;
+      padding: 24px 28px;
+      background: radial-gradient(circle at top left, #b4ff92, #4caf50 45%, #162717 100%);
+      border-radius: 0 22px 22px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel-header {
+      position: relative;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #96eb73, #6ebe55, #468c37);
+      border-bottom: 1px solid rgba(0,0,0,0.25);
+    }
+
+    .panel-title {
+      margin: 0 0 6px 0;
+      font-size: 1.6rem;
+      color: #102010;
+      text-shadow: 0 1px 0 rgba(255,255,255,.35);
+    }
+
+    .panel-subtitle {
+      max-width: 65%;
+      font-size: 0.95rem;
+      color: #1f3a1f;
+    }
+
+    .panel-meta {
+      margin-top: 10px;
+      font-size: .85rem;
+      color: #173217;
+    }
+
+    /* ---------- HEADER IMAGE ---------- */
+    .header-art {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      width: 190px;
+      height: auto;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.15);
+      padding: 6px;
+      box-shadow:
+        0 10px 25px rgba(0,0,0,0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.25);
+      opacity: .92;
+      pointer-events: none;
+    }
+
+    /* ---------- VIDEO LIST ---------- */
+    .video-list-container {
+      background: rgba(3,15,4,.65);
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .video-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .85rem;
+      color: #d7f0d2;
+    }
+
+    .search-box input {
+      background: rgba(0,0,0,.25);
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      color: #f3fff3;
+      outline: none;
+    }
+
+    .video-list {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .video-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.01));
+      cursor: pointer;
+    }
+
+    .video-item:hover {
+      background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+    }
+
+    .video-title {
+      font-size: .9rem;
+      font-weight: 500;
+      color: #f1f5ed;
+      text-shadow: 0 1px 2px rgba(0,0,0,.45);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 75%;
+    }
+
+    .play-button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: radial-gradient(circle at top left, #f8ffb7, #f3c02b);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width: 900px) {
+      #app { flex-direction: column; }
+
+      .blade-nav {
+        width: 100%;
+        overflow-x: auto;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+      }
+
+      .blade-stack {
+        flex-direction: row;
+        width: max-content;
+      }
+
+      .blade-tab {
+        border-radius: 14px;
+        height: 44px;
+      }
+
+      .header-art {
+        position: static;
+        display: block;
+        margin: 12px auto 0;
+        width: 120px;
+      }
+
+      .panel-subtitle { max-width: 100%; }
+    }
+  </style>
 </head>
 
-<body data-theme="all">
+<body>
+  <div id="app">
 
-<div class="shell">
+    <nav class="blade-nav">
+      <div class="blade-stack" id="bladeTabs"></div>
+    </nav>
 
-  <!-- TABS -->
-  <div class="tabs" id="tabs">
-    <button class="tab-btn active" data-person="all" data-theme="all">All Videos</button>
-    <button class="tab-btn" data-person="family" data-theme="family">Family</button>
-    <button class="tab-btn" data-person="andrew" data-theme="andrew">Andrew</button>
-    <button class="tab-btn" data-person="matthew" data-theme="matthew">Matthew</button>
-    <button class="tab-btn" data-person="michael" data-theme="michael">Michael</button>
-    <button class="tab-btn" data-person="marykay" data-theme="marykay">Mary Kay</button>
+    <section class="main-panel">
+
+      <div class="panel-header">
+        <h1 class="panel-title">Family Video Library</h1>
+        <p class="panel-subtitle">
+          Select a family member to filter videos. Use search to refine the list.
+        </p>
+        <div class="panel-meta">
+          <strong id="currentCategoryLabel">All Videos</strong>
+        </div>
+
+        <!-- 🔴 IMAGE IS HERE -->
+        <img src="orchard.png" class="header-art" alt="Family orchard illustration">
+      </div>
+
+      <div class="video-list-container">
+        <div class="video-list-header">
+          <div id="videoCount">Loading…</div>
+          <div class="search-box">
+            <input id="searchInput" placeholder="Search videos…" />
+          </div>
+        </div>
+        <div class="video-list" id="videoList"></div>
+      </div>
+
+    </section>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
-    <div class="header">
-      <h1>Family Video Library</h1>
-      <img class="header-art" src="cloud.png" alt="">
-    </div>
+  <script>
+    /* ====== CONFIG ====== */
+    const API_KEY = "AIzaSyBIJ4oKSFWJM8b56CXqdRAoxHyi43MIrw0";
+    const XML_PATH = "videos.xml";
 
-    <div class="panel">
-      <div id="rows"></div>
-    </div>
-  </div>
-</div>
+    const CATEGORIES = ["All Videos","Family","Andrew","Matthew","Michael","Mary Kay"];
 
-<script>
-/* =========================================================
-   🔑 CONFIG — THIS IS WHERE YOU PASTE YOUR API KEY
-   ========================================================= */
-const GOOGLE_API_KEY = "AIzaSyBIJ4oKSFWJM8b56CXqdRAoxHyi43MIrw0";
-const DRIVE_FOLDER_ID = "PASTE_FOLDER_ID_HERE";
+    let videos = [];
+    let keywordMap = {};
+    let activeCategory = "All Videos";
+    let searchTerm = "";
 
-/* =========================================================
-   GOOGLE DRIVE LOAD
-   ========================================================= */
-let activePerson = "all";
-const rowsEl = document.getElementById("rows");
-
-async function loadVideos(){
-  const q = `'${DRIVE_FOLDER_ID}' in parents and mimeType contains 'video/'`;
-  const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id,name)&key=${GOOGLE_API_KEY}`;
-
-  const res = await fetch(url);
-  const data = await res.json();
-  window.ALL_VIDEOS = data.files || [];
-  render();
-}
-
-function render(){
-  rowsEl.innerHTML = "";
-  window.ALL_VIDEOS
-    .filter(v => activePerson==="all" || v.name.toLowerCase().includes(activePerson))
-    .forEach(v=>{
-      const row=document.createElement("div");
-      row.className="row";
-      row.innerHTML=`
-        <div class="title">${v.name}</div>
-        <button class="play" onclick="window.open('https://drive.google.com/file/d/${v.id}/view','_blank')">Play</button>
-      `;
-      rowsEl.appendChild(row);
+    document.addEventListener("DOMContentLoaded", () => {
+      buildTabs();
+      document.getElementById("searchInput").addEventListener("input", e => {
+        searchTerm = e.target.value.toLowerCase();
+        render();
+      });
+      loadConfig();
     });
-}
 
-/* Tabs */
-document.getElementById("tabs").addEventListener("click",e=>{
-  const btn=e.target.closest(".tab-btn");
-  if(!btn) return;
-  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  activePerson=btn.dataset.person;
-  document.body.dataset.theme=btn.dataset.theme;
-  render();
-});
+    function buildTabs() {
+      const el = document.getElementById("bladeTabs");
+      CATEGORIES.forEach((c,i) => {
+        const d = document.createElement("div");
+        d.className = "blade-tab" + (i===0?" active":"");
+        d.textContent = c.toLowerCase();
+        d.onclick = () => setCategory(c);
+        el.appendChild(d);
+      });
+    }
 
-/* Init */
-loadVideos();
-</script>
+    function setCategory(c) {
+      activeCategory = c;
+      document.querySelectorAll(".blade-tab").forEach(t =>
+        t.classList.toggle("active", t.textContent===c.toLowerCase())
+      );
+      document.getElementById("currentCategoryLabel").textContent = c;
+      render();
+    }
 
+    async function loadConfig() {
+      const xml = await fetch(XML_PATH).then(r=>r.text());
+      const doc = new DOMParser().parseFromString(xml,"application/xml");
+      doc.querySelectorAll("keywords category").forEach(c=>{
+        keywordMap[c.getAttribute("name")] =
+          [...c.querySelectorAll("keyword")].map(k=>k.textContent.toLowerCase());
+      });
+      const folderId = doc.querySelector("driveFolder").getAttribute("id");
+      loadDrive(folderId);
+    }
+
+    async function loadDrive(folderId) {
+      const q = encodeURIComponent(`'${folderId}' in parents and mimeType contains 'video/' and trashed=false`);
+      const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&key=${API_KEY}`;
+      const res = await fetch(url).then(r=>r.json());
+      videos = res.files.map(f=>({
+        name: f.name,
+        url: `https://drive.google.com/file/d/${f.id}/preview`
+      }));
+      render();
+    }
+
+    function tokenize(t){return t.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);}
+
+    function render() {
+      const list = document.getElementById("videoList");
+      list.innerHTML = "";
+      let filtered = videos.filter(v=>{
+        if(activeCategory!=="All Videos"){
+          const keys = keywordMap[activeCategory]||[];
+          if(!tokenize(v.name).some(t=>keys.includes(t))) return false;
+        }
+        if(searchTerm && !v.name.toLowerCase().includes(searchTerm)) return false;
+        return true;
+      });
+      document.getElementById("videoCount").textContent =
+        `${filtered.length} video${filtered.length!==1?"s":""}`;
+      filtered.forEach(v=>{
+        const d=document.createElement("div");
+        d.className="video-item";
+        d.onclick=()=>openVideo(v.url);
+        d.innerHTML=`<div class="video-title">${v.name}</div><button class="play-button">Play</button>`;
+        list.appendChild(d);
+      });
+    }
+
+    function openVideo(url){
+      const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+      isIOS?location.href=url:window.open(url,"_blank");
+    }
+  </script>
 </body>
 </html>
