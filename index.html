@@ -9,13 +9,16 @@
     * { box-sizing: border-box; }
 
     :root{
-      /* Default theme = All Videos */
+      /* page theme (updated by JS when you switch tabs) */
       --accent-1:#b4ff92;  /* light */
       --accent-2:#4caf50;  /* mid */
       --accent-3:#162717;  /* dark */
-      --tab-glow: rgba(0,0,0,0.45);
-      --play-1: #f8ffb7;
-      --play-2: #f3c02b;
+
+      /* UI neutrals */
+      --ink:#0e1a10;
+      --muted:#2f3a33;
+      --panel-border: rgba(255,255,255,0.16);
+      --tab-glow: rgba(0,0,0,0.35);
     }
 
     body {
@@ -23,12 +26,14 @@
       padding: 24px;
       min-height: 100vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #4caf50 0%, #1c2b1f 40%, #030608 100%);
+      background: radial-gradient(circle at top left, var(--accent-2) 0%, #1c2b1f 40%, #030608 100%);
       color: #fdfdfd;
     }
 
+    /* ---------- APP WRAPPER ---------- */
     #app {
-      max-width: 1200px;
+      width: 100%;
+      max-width: 1280px;
       margin: 0 auto;
       display: flex;
       background: rgba(0,0,0,0.35);
@@ -39,11 +44,13 @@
 
     /* ---------- LEFT NAV (DESKTOP) ---------- */
     .blade-nav {
-      width: 210px;
-      padding: 14px 0;
-      background: linear-gradient(180deg, #d7d7d7, #a8a8a8, #e9e9e9);
+      width: 230px;
+      padding: 16px 12px;
+      background: linear-gradient(180deg, #e6e6e6, #bdbdbd, #f0f0f0);
       box-shadow: 10px 0 25px rgba(0,0,0,0.45);
-      position: sticky;
+      border-radius: 22px 0 0 22px;              /* rounded like your screenshot */
+      border-right: 1px solid rgba(0,0,0,0.12);  /* subtle separation */
+      position: sticky;                          /* “floats down” while you scroll */
       top: 20px;
       align-self: flex-start;
       z-index: 5;
@@ -52,45 +59,48 @@
     .blade-stack {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 0 10px;
+      gap: 14px;
+      padding: 6px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
     }
 
     .blade-tab {
-      height: 52px;
-      padding: 0 16px;
-      border-radius: 16px 0 0 16px;
-      background: linear-gradient(180deg, #eeeeee, #cacaca, #f5f5f5);
-      color: #2b2b2b;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: lowercase;
+      height: 58px;
+      padding: 0 18px;
+      border-radius: 22px; /* more rounded/pill-like */
+      background: linear-gradient(180deg, #f6f6f6, #d6d6d6, #f6f6f6);
+      color: #1b1b1b;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: none; /* Capitalized labels */
       cursor: pointer;
       display: flex;
       align-items: center;
       transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-      user-select: none;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.18);
     }
 
     .blade-tab:hover:not(.active) {
       transform: translateX(6px);
+      filter: brightness(1.02);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.22);
     }
 
-    /* Active tab gets stronger “blade” presence */
     .blade-tab.active {
       transform: translateX(10px);
-      color: #102010;
-      box-shadow: 0 10px 18px var(--tab-glow);
-      filter: saturate(1.08);
+      color: #0f260f;
+      box-shadow: 0 14px 24px var(--tab-glow);
     }
 
-    /* Per-tab active colors (JS adds cat-* to the active tab) */
-    .blade-tab.active.cat-all     { background: linear-gradient(180deg,#c9ffb9,#66c85a,#3c8f33); }
-    .blade-tab.active.cat-family  { background: linear-gradient(180deg,#b9fff3,#3ec7b7,#1a7b73); }
-    .blade-tab.active.cat-andrew  { background: linear-gradient(180deg,#c7dcff,#5f95ff,#2f5bd6); }
-    .blade-tab.active.cat-matthew { background: linear-gradient(180deg,#ffd0ea,#ff5aa7,#b51b62); }
-    .blade-tab.active.cat-michael { background: linear-gradient(180deg,#e5ccff,#9a63ff,#5a2bbd); }
-    .blade-tab.active.cat-marykay { background: linear-gradient(180deg,#fff3b9,#ffd24d,#c28b12); }
+    /* Active tab color mapping (requested swaps) */
+    .blade-tab.active.cat-all     { background: linear-gradient(180deg,#c9ffb9,#66c85a,#3c8f33); } /* green */
+    .blade-tab.active.cat-family  { background: linear-gradient(180deg,#e5ccff,#9a63ff,#5a2bbd); } /* purple */
+    .blade-tab.active.cat-andrew  { background: linear-gradient(180deg,#c7dcff,#5f95ff,#2f5bd6); } /* blue */
+    .blade-tab.active.cat-matthew { background: linear-gradient(180deg,#b9fff3,#3ec7b7,#1a7b73); } /* aqua */
+    .blade-tab.active.cat-michael { background: linear-gradient(180deg,#fff3b9,#ffd24d,#c28b12); } /* yellow */
+    .blade-tab.active.cat-marykay { background: linear-gradient(180deg,#ffd0ea,#ff5aa7,#b51b62); } /* pink */
 
     /* ---------- MAIN PANEL ---------- */
     .main-panel {
@@ -100,210 +110,193 @@
       border-radius: 0 22px 22px 0;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      min-height: 640px;
+      position: relative;
+      overflow: hidden;
     }
 
     .panel-header {
       position: relative;
-      padding: 18px 20px;
-      border-radius: 16px;
+      padding: 22px 22px 18px 22px;
+      border-radius: 18px;
       background: linear-gradient(135deg,
-        color-mix(in srgb, var(--accent-1) 70%, white 30%),
-        color-mix(in srgb, var(--accent-2) 85%, black 15%),
-        color-mix(in srgb, var(--accent-2) 70%, black 30%)
+        rgba(255,255,255,0.25),
+        rgba(0,0,0,0.10)
       );
-      border-bottom: 1px solid rgba(0,0,0,0.25);
+      border: 1px solid var(--panel-border);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      min-height: 140px;
     }
 
     .panel-title {
-      margin: 0 0 6px 0;
-      font-size: 1.6rem;
-      color: #102010;
-      text-shadow: 0 1px 0 rgba(255,255,255,.35);
+      margin: 0;
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: rgba(0,0,0,0.78);
+      text-shadow: 0 2px 0 rgba(255,255,255,0.25);
     }
 
     .panel-subtitle {
-      max-width: 65%;
-      font-size: 0.95rem;
-      color: #1f3a1f;
+      margin: 10px 0 0;
+      font-size: 18px;
+      color: rgba(0,0,0,0.68);
+      max-width: 720px;
     }
 
-    .panel-meta {
-      margin-top: 10px;
-      font-size: .85rem;
-      color: #173217;
+    .panel-category {
+      margin-top: 14px;
+      font-weight: 800;
+      color: rgba(0,0,0,0.72);
     }
 
-    /* ---------- HEADER IMAGE ---------- */
+    /* Orchard graphic */
     .header-art {
       position: absolute;
-      top: 8px;
-      right: 18px;
-      width: 190px;
+      top: 14px;
+      right: 16px;
+      width: 240px;
       height: auto;
-
-      /* no “extra frame” — the cloud border in the image is the only border */
-      background: transparent;
       padding: 0;
       border-radius: 0;
-
-      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
-      opacity: .95;
+      background: transparent;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.22);
       pointer-events: none;
     }
 
-    /* ---------- VIDEO LIST ---------- */
-    .video-list-container {
-      background: rgba(3,15,4,.65);
+    /* ---------- LIST PANEL ---------- */
+    .list-panel {
+      margin-top: 18px;
+      padding: 16px 16px 18px;
       border-radius: 18px;
-      padding: 14px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      flex: 1;
+      min-height: 340px;
     }
 
-    .video-list-header {
+    .list-top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      font-size: .85rem;
-      color: #d7f0d2;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .search-box input {
-      background: rgba(0,0,0,.25);
-      border: none;
+    #videoCount {
+      font-weight: 800;
+      color: rgba(255,255,255,0.85);
+      font-size: 18px;
+    }
+
+    #searchInput {
+      width: 320px;
+      max-width: 48vw;
+      height: 42px;
+      padding: 0 14px;
       border-radius: 999px;
-      padding: 6px 12px;
-      color: #f3fff3;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.25);
+      color: rgba(255,255,255,0.92);
       outline: none;
     }
+    #searchInput::placeholder { color: rgba(255,255,255,0.45); }
 
-    .video-list {
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+    #videoList {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: auto;
+      padding-right: 6px;
     }
 
     .video-item {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto;
       align-items: center;
-      padding: 10px 12px;
-      border-radius: 10px;
-      margin-bottom: 6px;
-      background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.01));
+      gap: 14px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
       cursor: pointer;
     }
 
     .video-item:hover {
-      background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+      background: rgba(0,0,0,0.24);
     }
 
     .video-title {
-      font-size: .9rem;
-      font-weight: 500;
-      color: #f1f5ed;
-      text-shadow: 0 1px 2px rgba(0,0,0,.45);
-      white-space: nowrap;
+      font-weight: 700;
+      color: rgba(255,255,255,0.92);
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 75%;
+      white-space: nowrap;
     }
 
     .play-button {
       border: none;
+      height: 38px;
+      padding: 0 18px;
       border-radius: 999px;
-      padding: 8px 14px;
-      background: radial-gradient(circle at top left, var(--play-1), var(--play-2));
-      font-weight: 700;
+      font-weight: 900;
+      letter-spacing: 0.02em;
       cursor: pointer;
+      background: linear-gradient(180deg, #ffe58a, #f2c84c);
+      color: #1d1a05;
+      box-shadow: 0 10px 18px rgba(0,0,0,0.25);
     }
 
     /* ---------- MOBILE ---------- */
-    @media (max-width: 900px) {
-      #app { flex-direction: column; }
-
+    @media (max-width: 900px){
+      body { padding: 0; }
+      #app { border-radius: 0; }
       .blade-nav {
-        width: 100%;
-        overflow-x: auto;
-        position: sticky;
+        width: 170px;
+        border-radius: 0;
         top: 0;
-        z-index: 999;
       }
-
-      .blade-stack {
-        flex-direction: row;
-        width: max-content;
-      }
-
-      .blade-tab {
-        border-radius: 14px;
-        height: 44px;
-      }
-
-      .header-art {
-        position: static;
-        display: block;
-        margin: 12px auto 0;
-        width: 120px;
-      }
-
-      .panel-subtitle { max-width: 100%; }
+      .main-panel { border-radius: 0; padding: 18px; }
+      .panel-title { font-size: 34px; }
+      .header-art { width: 170px; }
+      #searchInput { width: 220px; }
     }
   </style>
 </head>
 
 <body>
   <div id="app">
-
-    <nav class="blade-nav">
+    <aside class="blade-nav">
       <div class="blade-stack" id="bladeTabs"></div>
-    </nav>
+    </aside>
 
-    <section class="main-panel">
+    <main class="main-panel">
       <div class="panel-header">
         <h1 class="panel-title">Family Video Library</h1>
-        <p class="panel-subtitle">
-          Select a family member to filter videos. Use search to refine the list.
-        </p>
-        <div class="panel-meta">
-          <strong id="currentCategoryLabel">All Videos</strong>
-        </div>
+        <div class="panel-subtitle">Select a family member to filter videos. Use search to refine the list.</div>
+        <div class="panel-category" id="currentCategoryLabel">All Videos</div>
 
-        <img src="orchard.png" class="header-art" alt="Family orchard illustration">
+        <img class="header-art" src="orchard.png" alt="Orchard" />
       </div>
 
-      <div class="video-list-container">
-        <div class="video-list-header">
-          <div id="videoCount">Loading…</div>
-          <div class="search-box">
-            <input id="searchInput" placeholder="Search videos…" />
-          </div>
+      <section class="list-panel">
+        <div class="list-top">
+          <div id="videoCount">0 videos</div>
+          <input id="searchInput" type="text" placeholder="Search videos..." />
         </div>
-        <div class="video-list" id="videoList"></div>
-      </div>
-
-    </section>
+        <div id="videoList"></div>
+      </section>
+    </main>
   </div>
 
   <script>
     /* ====== CONFIG ====== */
-    const API_KEY = "AIzaSyBIJ4oKSFWJM8b56CXqdRAoxHyi43MIrw0";
+    const API_KEY = "PASTE_YOUR_API_KEY_HERE";
     const XML_PATH = "videos.xml";
-
     const CATEGORIES = ["All Videos","Family","Andrew","Matthew","Michael","Mary Kay"];
-
-    // Theme per category (also sets Play button hues)
-    const THEMES = {
-      "All Videos": { a1:"#b4ff92", a2:"#4caf50", a3:"#162717", play1:"#f8ffb7", play2:"#f3c02b", catClass:"cat-all" },
-      "Family":     { a1:"#a6fff2", a2:"#2fbfb0", a3:"#0f3430", play1:"#c9fff6", play2:"#3ec7b7", catClass:"cat-family" },
-      "Andrew":     { a1:"#c7dcff", a2:"#4d83ff", a3:"#17264d", play1:"#dbe8ff", play2:"#5f95ff", catClass:"cat-andrew" },
-      "Matthew":    { a1:"#ffd0ea", a2:"#ff4d9f", a3:"#3b0d25", play1:"#ffe2f1", play2:"#ff5aa7", catClass:"cat-matthew" },
-      "Michael":    { a1:"#e5ccff", a2:"#915bff", a3:"#24123f", play1:"#efe1ff", play2:"#9a63ff", catClass:"cat-michael" },
-      "Mary Kay":   { a1:"#fff0b0", a2:"#ffc83d", a3:"#3a2a0a", play1:"#fff7cf", play2:"#ffd24d", catClass:"cat-marykay" }
-    };
 
     let videos = [];
     let keywordMap = {};
@@ -312,16 +305,12 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       buildTabs();
-
       document.getElementById("searchInput").addEventListener("input", e => {
         searchTerm = e.target.value.toLowerCase();
         render();
       });
-
-      // Apply initial theme + active tab class immediately
-      applyTheme("All Videos");
-
       loadConfig();
+      setCategory("All Videos");
     });
 
     function buildTabs() {
@@ -329,57 +318,66 @@
       el.innerHTML = "";
       CATEGORIES.forEach((c,i) => {
         const d = document.createElement("div");
-        d.className = "blade-tab" + (i===0 ? " active" : "");
-        d.textContent = c.toLowerCase();
-        d.dataset.category = c;
+        d.className = "blade-tab" + (i===0?" active":"");
+        d.textContent = c;
         d.onclick = () => setCategory(c);
         el.appendChild(d);
       });
+    }
 
-      // Ensure first tab has the right cat-* class
-      updateActiveTabClasses("All Videos");
+    function categorySlug(c){
+      return ({
+        "All Videos":"all",
+        "Family":"family",
+        "Andrew":"andrew",
+        "Matthew":"matthew",
+        "Michael":"michael",
+        "Mary Kay":"marykay"
+      })[c] || "all";
+    }
+
+    function setThemeForCategory(categoryName){
+      const slug = categorySlug(categoryName);
+      const theme = {
+        all:     ["#b4ff92", "#4caf50", "#162717"],
+        family:  ["#e5ccff", "#915bff", "#24123f"],
+        andrew:  ["#c7dcff", "#4d83ff", "#17264d"],
+        matthew: ["#b9fff3", "#2fbfb0", "#0f3430"],
+        michael: ["#fff0b0", "#ffc83d", "#3a2a0a"],
+        marykay: ["#ffd0ea", "#ff4d9f", "#3b0d25"]
+      }[slug];
+
+      document.documentElement.style.setProperty("--accent-1", theme[0]);
+      document.documentElement.style.setProperty("--accent-2", theme[1]);
+      document.documentElement.style.setProperty("--accent-3", theme[2]);
     }
 
     function setCategory(c) {
       activeCategory = c;
-      document.getElementById("currentCategoryLabel").textContent = c;
-
-      updateActiveTabClasses(c);
-      applyTheme(c);
-
-      render();
-    }
-
-    function updateActiveTabClasses(activeCat) {
-      const catClass = (THEMES[activeCat] || THEMES["All Videos"]).catClass;
+      const slug = categorySlug(c);
 
       document.querySelectorAll(".blade-tab").forEach(t => {
-        const isActive = (t.dataset.category === activeCat);
+        const isActive = (t.textContent === c);
         t.classList.toggle("active", isActive);
-
-        // remove all cat-* classes
         t.classList.remove("cat-all","cat-family","cat-andrew","cat-matthew","cat-michael","cat-marykay");
-
-        if (isActive) t.classList.add(catClass);
+        if (isActive) t.classList.add(`cat-${slug}`);
       });
-    }
 
-    function applyTheme(categoryName) {
-      const th = THEMES[categoryName] || THEMES["All Videos"];
-      document.documentElement.style.setProperty("--accent-1", th.a1);
-      document.documentElement.style.setProperty("--accent-2", th.a2);
-      document.documentElement.style.setProperty("--accent-3", th.a3);
-      document.documentElement.style.setProperty("--play-1", th.play1);
-      document.documentElement.style.setProperty("--play-2", th.play2);
+      document.getElementById("currentCategoryLabel").textContent = c;
+      setThemeForCategory(c);
+      render();
     }
 
     async function loadConfig() {
       const xml = await fetch(XML_PATH).then(r=>r.text());
       const doc = new DOMParser().parseFromString(xml,"application/xml");
+
+      keywordMap = {};
       doc.querySelectorAll("keywords category").forEach(c=>{
         keywordMap[c.getAttribute("name")] =
-          [...c.querySelectorAll("keyword")].map(k=>k.textContent.toLowerCase());
+          [...c.querySelectorAll("keyword")].map(k=>k.textContent.trim().toLowerCase());
       });
+
       const folderId = doc.querySelector("driveFolder").getAttribute("id");
       loadDrive(folderId);
     }
@@ -397,28 +395,37 @@
       render();
     }
 
-    function normalizeWords(text) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim()
-    .replace(/\s+/g, " ");
-}
+    function tokenize(t){
+      return t.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+    }
 
-function matchesKeyword(filename, keyword) {
-  const hay = " " + normalizeWords(filename) + " ";
-  const needle = " " + normalizeWords(keyword) + " ";
-  return hay.includes(needle);
-}
+    function normalizeForPhraseMatch(t){
+      return t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    }
+
+    function matchesKeyword(fileName, keyword){
+      const kw = keyword.trim().toLowerCase();
+      if(!kw) return false;
+
+      if(kw.includes(" ")){
+        const hay = normalizeForPhraseMatch(fileName);
+        const needle = normalizeForPhraseMatch(kw);
+        return hay.includes(needle);
+      }
+
+      return tokenize(fileName).includes(kw);
+    }
 
     function render() {
       const list = document.getElementById("videoList");
       list.innerHTML = "";
 
-      const filtered = videos.filter(v=>{
-        if(activeCategory!=="All Videos"){
+      let filtered = videos.filter(v=>{
+        if(activeCategory !== "All Videos"){
           const keys = keywordMap[activeCategory] || [];
-        if (!keys.some(k => matchesKeyword(v.name, k))) return false;
+          if(keys.length){
+            if(!keys.some(k => matchesKeyword(v.name, k))) return false;
+          }
         }
         if(searchTerm && !v.name.toLowerCase().includes(searchTerm)) return false;
         return true;
@@ -427,11 +434,20 @@ function matchesKeyword(filename, keyword) {
       document.getElementById("videoCount").textContent =
         `${filtered.length} video${filtered.length!==1?"s":""}`;
 
+      if(!filtered.length){
+        const empty = document.createElement("div");
+        empty.style.opacity = "0.85";
+        empty.style.padding = "10px 6px";
+        empty.textContent = "No videos found for this view.";
+        list.appendChild(empty);
+        return;
+      }
+
       filtered.forEach(v=>{
-        const d=document.createElement("div");
-        d.className="video-item";
-        d.onclick=()=>openVideo(v.url);
-        d.innerHTML=`<div class="video-title">${v.name}</div><button class="play-button">Play</button>`;
+        const d = document.createElement("div");
+        d.className = "video-item";
+        d.onclick = () => openVideo(v.url);
+        d.innerHTML = `<div class="video-title">${v.name}</div><button class="play-button">Play</button>`;
         list.appendChild(d);
       });
     }
