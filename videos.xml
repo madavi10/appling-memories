@@ -18,30 +18,34 @@
 
     <category name="Family">
       <keyword>family</keyword>
-      <keyword>matthew</keyword>
-      <keyword>andrew</keyword>
-      <keyword>michael</keyword>
-      <keyword>mary kay</keyword>
+      <keyword>familys</keyword>
     </category>
 
     <category name="Andrew">
       <keyword>andrew</keyword>
       <keyword>chi</keyword>
+      <keyword>andrews</keyword>
+      <keyword>chis</keyword>
     </category>
 
     <category name="Matthew">
       <keyword>matthew</keyword>
       <keyword>matt</keyword>
+      <keyword>matts</keyword>
+      <keyword>matthews</keyword>
     </category>
 
     <category name="Michael">
       <keyword>michael</keyword>
       <keyword>mike</keyword>
+      <keyword>michaels</keyword>
     </category>
 
     <category name="Mary Kay">
       <keyword>mary kay</keyword>
       <keyword>mk</keyword>
+      <keyword>mks</keyword>
+      <keyword>mary kays</keyword>
     </category>
 
   </keywords>
