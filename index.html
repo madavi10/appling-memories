@@ -415,14 +415,18 @@ function matchesKeyword(filename, keyword) {
       const list = document.getElementById("videoList");
       list.innerHTML = "";
 
-      const filtered = videos.filter(v=>{
-        if(activeCategory!=="All Videos"){
-          const keys = keywordMap[activeCategory] || [];
-        if (!keys.some(k => matchesKeyword(v.name, k))) return false;
-        }
-        if(searchTerm && !v.name.toLowerCase().includes(searchTerm)) return false;
-        return true;
-      });
+      const filtered = videos
+  .filter(v => {
+    if (activeCategory !== "All Videos") {
+      const keys = keywordMap[activeCategory] || [];
+      if (!keys.some(k => matchesKeyword(v.name, k))) return false;
+    }
+    if (searchTerm && !v.name.toLowerCase().includes(searchTerm)) return false;
+    return true;
+  })
+  .sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: "base" })
+  );
 
       document.getElementById("videoCount").textContent =
         `${filtered.length} video${filtered.length!==1?"s":""}`;
